@@ -25,6 +25,11 @@
     --yellow: #fbbf24;
     --red: #ef4444;
     --orange: #f97316;
+    
+    /* Exact locked heights for 100% alignment */
+    --header-row-height: 52px;
+    --data-row-height: 42px;
+    --cell-width: 36px;
   }
 
   body {
@@ -114,14 +119,17 @@
   .habit-sidebar {
     background: var(--surface);
     border-right: 1px solid var(--border);
-    width: 200px;
+    width: 210px;
     flex-shrink: 0;
     position: sticky;
     left: 0;
     z-index: 10;
   }
   .sidebar-header {
-    padding: 10px 14px;
+    height: var(--header-row-height);
+    min-height: var(--header-row-height);
+    max-height: var(--header-row-height);
+    padding: 0 14px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.75rem;
     font-weight: 700;
@@ -133,7 +141,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 44px;
+    box-sizing: border-box;
   }
   .add-habit-btn {
     background: var(--accent);
@@ -152,20 +160,23 @@
   }
   .add-habit-btn:hover { opacity: 0.8; }
   .habit-row {
+    height: var(--data-row-height);
+    min-height: var(--data-row-height);
+    max-height: var(--data-row-height);
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 0 10px 0 14px;
-    min-height: 38px;
     border-bottom: 1px solid var(--border);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 500;
     color: var(--text);
     user-select: none;
     position: relative;
   }
   .habit-row:hover { background: var(--surface2); }
-  .habit-emoji { font-size: 0.9rem; flex-shrink: 0; }
+  .habit-emoji { font-size: 0.95rem; flex-shrink: 0; }
   .habit-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .delete-habit-btn {
     display: none;
@@ -181,13 +192,16 @@
   .habit-row:hover .delete-habit-btn { display: block; }
   .delete-habit-btn:hover { color: var(--pink); }
   .special-row {
+    height: var(--data-row-height);
+    min-height: var(--data-row-height);
+    max-height: var(--data-row-height);
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 0 10px 0 14px;
-    min-height: 38px;
     border-bottom: 1px solid var(--border);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 500;
     color: var(--text-muted);
   }
@@ -195,22 +209,26 @@
   /* ── GRID AREA ── */
   .grid-area { flex: 1; overflow-x: auto; overflow-y: visible; }
   .week-headers {
+    height: var(--header-row-height);
+    min-height: var(--header-row-height);
+    max-height: var(--header-row-height);
     display: flex;
     position: sticky;
     top: 0;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     z-index: 5;
-    min-height: 44px;
+    box-sizing: border-box;
   }
   .week-block-header {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 4px 0 4px 4px;
+    justify-content: space-between;
+    padding: 4px 0 4px 0;
     border-right: 2px solid var(--border);
     flex-shrink: 0;
+    box-sizing: border-box;
   }
   .week-label {
     font-family: 'Space Grotesk', sans-serif;
@@ -223,18 +241,21 @@
   }
   .day-headers { display: flex; }
   .day-header {
-    width: 34px;
+    width: var(--cell-width);
+    min-width: var(--cell-width);
     text-align: center;
     font-size: 0.6rem;
     color: var(--text-dim);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1px;
-    padding-bottom: 4px;
+    justify-content: center;
+    gap: 2px;
+    padding-bottom: 2px;
+    box-sizing: border-box;
   }
   .day-header .dow { font-weight: 600; color: var(--text-muted); }
-  .day-header .date-num { font-size: 0.65rem; font-weight: 700; }
+  .day-header .date-num { font-size: 0.68rem; font-weight: 700; }
   .day-header.today .date-num {
     background: var(--accent);
     color: #fff;
@@ -248,15 +269,31 @@
   .day-header.future .date-num { color: var(--text-dim); opacity: 0.5; }
 
   /* ── CELLS ── */
-  .grid-habit-row { display: flex; border-bottom: 1px solid var(--border); min-height: 38px; }
-  .week-cells { display: flex; border-right: 2px solid var(--border); flex-shrink: 0; }
+  .grid-habit-row {
+    height: var(--data-row-height);
+    min-height: var(--data-row-height);
+    max-height: var(--data-row-height);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .week-cells {
+    display: flex;
+    height: 100%;
+    border-right: 2px solid var(--border);
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
   .cell {
-    width: 34px;
-    height: 38px;
+    width: var(--cell-width);
+    min-width: var(--cell-width);
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    box-sizing: border-box;
   }
   .cell.future { cursor: not-allowed; }
   .cell.future:hover { background: transparent; }
@@ -279,7 +316,15 @@
   .lock-icon { font-size: 0.55rem; color: var(--text-dim); opacity: 0.35; user-select: none; }
 
   /* Mood & Sleep */
-  .mood-cell { width: 34px; height: 38px; display: flex; align-items: center; justify-content: center; }
+  .mood-cell {
+    width: var(--cell-width);
+    min-width: var(--cell-width);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
   .mood-cell.past { cursor: pointer; }
   .mood-cell.future { cursor: not-allowed; }
   .mood-dot {
@@ -296,17 +341,25 @@
   .mood-dot.m4 { background: var(--green);  border-color: var(--green); }
   .mood-dot.m5 { background: var(--accent); border-color: var(--accent); }
 
-  .sleep-cell { width: 34px; height: 38px; display: flex; align-items: center; justify-content: center; }
+  .sleep-cell {
+    width: var(--cell-width);
+    min-width: var(--cell-width);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
   .sleep-cell.past { cursor: pointer; }
   .sleep-cell.future { cursor: not-allowed; }
   .sleep-num {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     font-weight: 700;
     color: var(--text-dim);
     background: var(--surface3);
     border-radius: 4px;
-    padding: 1px 3px;
-    min-width: 16px;
+    padding: 1px 4px;
+    min-width: 18px;
     text-align: center;
     transition: all 0.15s;
   }
@@ -389,11 +442,15 @@
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
   @media (max-width: 640px) {
-    .habit-sidebar { width: 140px; }
+    :root {
+      --header-row-height: 48px;
+      --data-row-height: 40px;
+      --cell-width: 30px;
+    }
+    .habit-sidebar { width: 145px; }
     .header-title { font-size: 0.9rem; }
     .stats-bar { gap: 14px; padding: 10px 14px; }
     .stat-value { font-size: 1rem; }
-    .cell, .day-header, .mood-cell, .sleep-cell { width: 28px; }
     .charts-section { gap: 20px; padding: 16px; }
     .donut-container { width: 100px; height: 100px; }
     .donut-svg { width: 100px; height: 100px; }
@@ -547,14 +604,15 @@ function loadLocal() {
 function saveLocal() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
 const defaultHabits = [
-  { id:1, name:'Wake up at 05:00', emoji:'⏰' },
-  { id:2, name:'Gym',              emoji:'💪' },
-  { id:3, name:'Reading / Learning', emoji:'📚' },
-  { id:4, name:'Day Planning',     emoji:'📅' },
-  { id:5, name:'Project Work',     emoji:'🎯' },
-  { id:6, name:'No Social Media',  emoji:'🌿' },
-  { id:7, name:'Goal Journaling',  emoji:'📝' },
-  { id:8, name:'Cold Shower',      emoji:'🚿' },
+  { id:1, name:'wake up before 7AM', emoji:'⏰' },
+  { id:2, name:'Azoran',             emoji:'📊' },
+  { id:3, name:'10k steps',          emoji:'🏃' },
+  { id:4, name:'4 liter water',      emoji:'💧' },
+  { id:5, name:'DBMS 1 hr',          emoji:'📄' },
+  { id:6, name:'DSA 1hr',            emoji:'📄' },
+  { id:7, name:'ML 1hr',             emoji:'📄' },
+  { id:8, name:'Only 4 times',       emoji:'🍎' },
+  { id:9, name:'NP',                 emoji:'🧘' }
 ];
 
 let state = loadLocal() || {
